@@ -12,9 +12,9 @@ class EmailerTool:
         """
         Envía un email con el análisis a los destinatarios.
         """
-        email_host = os.getenv('EMAIL_HOST')
+        email_host = os.getenv('EMAIL_HOST', 'smtp.gmail.com')
         email_port = int(os.getenv('EMAIL_PORT', 587))
-        email_user = os.getenv('EMAIL_USER')
+        email_user = os.getenv('EMAIL_SENDER')
         email_password = os.getenv('EMAIL_PASSWORD')
 
         print(f"[DEBUG] Conectando a SMTP: {email_host}:{email_port}")
