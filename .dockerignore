@@ -1,0 +1,29 @@
+# Archivos de desarrollo
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+.env
+
+# Archivos de debug
+*.html
+*.log
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# IDE
+.vscode/
+.idea/
+
+# Archivos temporales
+*.tmp
+*.temp 
