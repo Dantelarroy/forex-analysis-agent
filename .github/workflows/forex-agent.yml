@@ -1,4 +1,4 @@
-name: Forex Analysis Agent
+name: Forex Analysis Agent - Automated EUR/USD Analysis
 
 on:
   schedule:
