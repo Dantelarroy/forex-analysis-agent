@@ -1,0 +1,44 @@
+name: Forex Analysis Agent - Automated EUR/USD Analysis
+
+on:
+  schedule:
+    # Ejecutar diariamente a las 9:00 AM UTC (6:00 AM hora local Argentina)
+    - cron: '0 9 * * *'
+  workflow_dispatch: # Permite ejecución manual
+
+jobs:
+  run-forex-agent:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+      
+    - name: Build and run Forex Agent
+      env:
+        GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+        EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+        EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+        EMAIL_RECIPIENTS: ${{ secrets.EMAIL_RECIPIENTS }}
+      run: |
+        # Construir la imagen Docker
+        docker build -t forex-agent .
+        
+        # Ejecutar el agente
+        docker run --rm \
+          -e GROQ_API_KEY=$GROQ_API_KEY \
+          -e EMAIL_SENDER=$EMAIL_SENDER \
+          -e EMAIL_PASSWORD=$EMAIL_PASSWORD \
+          -e EMAIL_RECIPIENTS=$EMAIL_RECIPIENTS \
+          forex-agent
+        
+    - name: Upload analysis results
+      if: always()
+      uses: actions/upload-artifact@v4
+      with:
+        name: forex-analysis-results
+        path: data/
+        retention-days: 30 
